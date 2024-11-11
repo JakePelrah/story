@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useAudioManager } from "./AudioManager"
+import { useAudioManager } from "../AudioManager"
 import "./button.css"
 
 export default function Button({ name, type }) {

@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import parse from 'html-react-parser'
 import { Editor } from '@tinymce/tinymce-react';
-import Button from './Button.jsx'
-import LiveView from './LiveView.jsx';
-import Footer from './Footer.jsx'
-import Sidebar from './Sidebar.jsx'
+import Button from './Button/Button.jsx'
+import LiveView from './LiveView/LiveView.jsx';
+import Footer from './Footer/Footer.jsx'
+import Sidebar from './Sidebar/Sidebar.jsx'
 
 
 const initialContent = `<p style="text-align: center;"><span style="font-size: 18pt;"><strong>Scene 1</strong></span></p>
