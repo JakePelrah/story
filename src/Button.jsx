@@ -1,21 +1,15 @@
 import { useEffect, useState } from "react"
 import { useAudioManager } from "./AudioManager"
+import "./button.css"
 
-export default function Button({ name }) {
+export default function Button({ name, type }) {
     const { play } = useAudioManager()
 
 
-    useEffect(() => {
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-    }, [])
 
-    return (<button className="btn track-btn"
-        onClick={play} data-name={name}
-        data-bs-toggle="tooltip"
-         data-bs-placement="bottom"
-        data-bs-custom-class="custom-tooltip"
-        data-bs-title={name} >
-        <img src="play-fill.svg"></img>
+    return (<button className={`my-1 ms-3 btn track-btn ${type}`}
+        onClick={play}>
+        <i class="bi bi-speaker me-2"></i>
+        {name}
     </button>)
 }

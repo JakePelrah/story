@@ -61,8 +61,8 @@ color: white !important;
 }
 
 .track-btn {
-  background-color: rgb(255, 71, 10);
-  border-radius: 2em;
+  background-color: rgb(113, 113, 113);
+  color: white;
 }
 
 .custom-tooltip {

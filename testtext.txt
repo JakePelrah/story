@@ -1,13 +1,8 @@
-Scene 1
-
-[ch]Emma
-
-[di]I brought you something.
-
-
-[sd]She extends the package to him
-
-
-[di]You… you left this last night. I thought you might need it.
-
-[ch]Bob
+<p style="text-align: center;">Scene 1</p>
+<p>[ch]Emma</p>
+<p>[di]I brought you something.</p>
+<p>[sd]She extends the package to him</p>
+<p>[di]You&hellip; you left this last night. I thought you might need it.</p>
+<p>[ch]Bob</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
