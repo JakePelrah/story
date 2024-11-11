@@ -1,5 +1,6 @@
 #live-view {
     width: 50vw;
+
     border-left: 1px solid grey !important;
     background-color: #fff;
     overflow-y: scroll;
@@ -15,6 +16,7 @@
 .live-view-html {
     /* background-color: #333 !important; */
     height: 92.5%;
+    margin-top: 8px;
 }
 
 .footer{

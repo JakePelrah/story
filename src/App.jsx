@@ -47,16 +47,22 @@ export default function App() {
             return <div className='stage-direction'>(<span className='sd-dialogue'>{domNode.data.split('[sd]')[1]}</span>)</div>
           }
 
-           // if stage direction
-           if (domNode.data?.startsWith('[audiobg]')) {
+          // if stage direction
+          if (domNode.data?.startsWith('[audiobg]')) {
             return <Button type="audiobg" name={domNode.data?.split('[audiobg]')?.[1] || ''} />;
           }
 
-           // if stage direction
-           if (domNode.data?.startsWith('[audio]')) {
+          // if stage direction
+          if (domNode.data?.startsWith('[audio]')) {
             return <Button type="audio" name={domNode.data?.split('[audio]')?.[1] || ''} />;
           }
-          
+
+           // if stage direction
+           if (domNode.data?.startsWith('[as]')) {
+            const [a, s] =domNode.data.split('[as]')[1].slice(1, -1).split(',');
+            return <div className='dialogue'>{`Act ${a} Scene ${s}`}</div>
+          }
+
         },
       }))
     }
@@ -79,13 +85,28 @@ export default function App() {
           statusbar: false,
           content_css: 'custom.css',
           font_css: '../node_modules/bootstrap-icons/font/bootstrap-icons.css',
-          toolbar: 'tracks',
+          menu: {
+            custom: {
+              title: 'Audio',
+              items: 'myCustomMenuItem'
+            }
+          },
+          menubar: 'edit view format custom',
+          toolbar: false,
           plugins: ['advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
             'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
             'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'],
 
           resize: false,
           setup: (editor) => {
+
+            editor.ui.registry.addMenuItem('myCustomMenuItem', {
+              text: 'My Custom Menu Item',
+              onAction: () => {
+                editor.insertContent('[audiobg]BG Audio')
+                setContent(editor.getContent())
+              }
+            });
 
             editor.on('FormatApply', () => setContent(editor.getContent()))
             editor.on('FormatRemove', () => setContent(editor.getContent()))
@@ -121,32 +142,6 @@ export default function App() {
             });
 
             editor.on('input', () => setContent(editor.getContent()))
-
-            /* example, adding a toolbar menu button */
-            editor.ui.registry.addMenuButton('tracks', {
-              text: 'Tracks',
-              fetch: (callback) => {
-                const items = [
-                  {
-                    type: 'menuitem',
-                    text: 'BG Audio',
-                    onAction: () => {
-                      editor.insertContent('[audiobg]BG Audio')
-                      setContent(editor.getContent())
-                    }
-                  },
-                  {
-                    type: 'menuitem',
-                    text: 'Audio',
-                    onAction: () => {
-                      editor.insertContent('[audio]Audio')
-                      setContent(editor.getContent())
-                    }
-                  },
-                ];
-                callback(items);
-              }
-            });
 
           },
           plugins: [
