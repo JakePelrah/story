@@ -4,9 +4,9 @@ import { Editor } from '@tinymce/tinymce-react';
 import Button from './Button/Button.jsx'
 import LiveView from './LiveView/LiveView.jsx';
 import Footer from './Footer/Footer.jsx'
+import Sidebar from './Sidebar/Sidebar.jsx'
 
-
-const initialContent = `<p style="text-align: center;"><span style="font-size: 18pt;"><strong>Scene 1</strong></span></p>
+const initialContent = `<p style="text-align: center;"><span style="font-size: 18pt;"><strong>[as](1,1)</strong></span></p>
 <p>[ch]Emma</p>
 <p>[di]I brought you something.</p>
 <p>[sd]She extends the package to him</p>
@@ -56,9 +56,9 @@ export default function App() {
             return <Button type="audio" name={domNode.data?.split('[audio]')?.[1] || ''} />;
           }
 
-           // if stage direction
-           if (domNode.data?.startsWith('[as]')) {
-            const [a, s] =domNode.data.split('[as]')[1].slice(1, -1).split(',');
+          // if stage direction
+          if (domNode.data?.startsWith('[as]')) {
+            const [a, s] = domNode.data.split('[as]')[1].slice(1, -1).split(',');
             return <div className='dialogue'>{`Act ${a} Scene ${s}`}</div>
           }
 
@@ -77,7 +77,7 @@ export default function App() {
   return (<>
 
     <div id="workspace" className='d-flex'>
-      {/* <Sidebar /> */}
+      <Sidebar />
       <Editor
         apiKey='yzuq4yobe1o1lzlt7l53yjbfls2694t8rh8opst94zzmct98'
         init={{
@@ -99,6 +99,12 @@ export default function App() {
           resize: false,
           setup: (editor) => {
 
+            // var newColor = document.createElement("style");
+            // document.head.appendChild(newColor);
+            // newColor.sheet.insertRule(".tox-edit-area__iframe {background-color: blue !important}");
+
+            
+
             editor.ui.registry.addMenuItem('myCustomMenuItem', {
               text: 'My Custom Menu Item',
               onAction: () => {
@@ -106,6 +112,7 @@ export default function App() {
                 setContent(editor.getContent())
               }
             });
+
 
             editor.on('FormatApply', () => setContent(editor.getContent()))
             editor.on('FormatRemove', () => setContent(editor.getContent()))

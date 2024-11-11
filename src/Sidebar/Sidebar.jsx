@@ -7,7 +7,7 @@ export default function Sidebar() {
 
         <TopMenu />
 
-        <Directory name="New Folder" />
+        <Directory name="Audio" />
 
         <div class="collapse dir-collapse" id="collapseExample">
             <File />

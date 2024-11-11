@@ -5,3 +5,19 @@
 .audio{
     background-color: red !important;
 }
+
+.poppover{
+    background-color: red !important;
+    height: 2em;
+    width: 2em;
+}
+
+.popover-inner {
+    padding: 10px;
+    background-color: white; /* Set a background color if it's transparent */
+    border-radius: 4px; /* Add border radius for a rounded look */
+}
+
+.popover-arrow {
+    border-color: transparent transparent transparent #000; /* Ensure arrow is visible */
+}
