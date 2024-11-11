@@ -3,6 +3,7 @@
     border-left: 1px solid grey !important;
     background-color: #fff;
     overflow-y: scroll;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .live-view-header {
@@ -24,19 +25,19 @@
 .character{
     font-size: 2em;
     font-weight: bold;
-    font-family: 'Courier New', Courier, monospace;
+    /* font-family: 'Courier New', Courier, monospace; */
 }
 
 .dialogue{
     font-size: 1.25em;
     margin-left: 1em;
-    font-family: 'Courier New', Courier, monospace;
+    /* font-family: 'Courier New', Courier, monospace; */
 }
 
 .sd-dialogue{
     font-style: italic;
     font-size: 1.25em;
-    font-family: 'Courier New', Courier, monospace;
+    /* font-family: 'Courier New', Courier, monospace; */
     margin: 0em;
 }
 .stage-direction{

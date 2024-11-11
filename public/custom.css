@@ -1,2 +1,4 @@
-body { line-height: 1; }
-
+body {
+    line-height: 1;
+    font-family: 'Courier New', Courier, monospace
+}

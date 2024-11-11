@@ -7,12 +7,14 @@ import Footer from './Footer.jsx'
 import Sidebar from './Sidebar.jsx'
 
 
-const initialContent = `<p style="text-align: center;">Scene 1</p>
+const initialContent = `<p style="text-align: center;"><span style="font-size: 18pt;"><strong>Scene 1</strong></span></p>
 <p>[ch]Emma</p>
 <p>[di]I brought you something.</p>
 <p>[sd]She extends the package to him</p>
 <p>[di]You&hellip; you left this last night. I thought you might need it.</p>
 <p>[ch]Bob</p>
+<p>[audiobg]BG Audio</p>
+<p>[audio]Audio</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>`
 
