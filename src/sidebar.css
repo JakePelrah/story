@@ -1,0 +1,50 @@
+
+#sidebar {
+    height: 100%;
+    width: 15em;
+}
+
+.top-menu{
+    height: 2.5em;
+    background-color: #404040;
+}
+.top-menu i{
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.directory{
+    color:white;
+}
+
+.file{
+    padding-left: 1em;
+}
+
+.file:hover{
+    background-color: rgb(108, 108, 108);
+}
+
+.show-all-toggle{
+    text-decoration: none;
+}
+
+.show-all-toggle::before{
+    content: "\F231";
+    font-size: 1em;
+    font-family: 'bootstrap-icons';
+
+}
+
+.show-all-toggle.opened::before{
+    content: "\F229";
+    font-size: 1em;
+    font-family: 'bootstrap-icons';
+}
+
+.file::before{
+    content: "\F749";
+    margin-right: .2em;
+    font-size: 1em;
+    font-family: 'bootstrap-icons';
+}
