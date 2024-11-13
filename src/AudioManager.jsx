@@ -13,8 +13,6 @@ export default function AudioManager({ children }) {
         // Assign to the ref
         audioContextRef.current = audioContext;
     
-        // Optional: log the context to verify
-        console.log(audioContextRef.current);
     
         // Cleanup function to close the audio context when the component unmounts
         return () => {
