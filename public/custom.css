@@ -3,11 +3,27 @@ body {
     font-family: 'Courier New', Courier, monospace
 }
 
-.audio {
+p[id^='audio'] {
     font-weight: bold;
 }
 
-.audio::before {
+p[id^='audio']::before {
     content: '🎧';
+    margin-right: .2em;
+}
+
+p[id^='characterf']::before {
+    content: '👩';
+    margin-right: .2em;
+}
+
+p[id^='character'] {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+p[id^='characterm']::before {
+    display: inline-block;   
+    content: '👨';
     margin-right: .2em;
 }

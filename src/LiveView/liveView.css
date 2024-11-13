@@ -24,16 +24,14 @@
     color: white;
 }
 
-.character{
+p[id^='character']{
     font-size: 2em;
     font-weight: bold;
-    /* font-family: 'Courier New', Courier, monospace; */
 }
 
 .dialogue{
     font-size: 1.25em;
     margin-left: 1em;
-    /* font-family: 'Courier New', Courier, monospace; */
 }
 
 .sd-dialogue{

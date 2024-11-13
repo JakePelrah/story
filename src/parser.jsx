@@ -9,10 +9,10 @@ export const parserRules = {
 
 export default function parser(content) {
 
- return parse(content, {
+  return parse(content, {
 
     replace(domNode) {
-   
+
       // if character
       if (domNode.data?.startsWith('[ch]')) {
         return <div className='character'>{domNode.data.split('[ch]')[1]}</div>
@@ -27,14 +27,20 @@ export default function parser(content) {
       }
 
       // if audio
-      if (domNode.attribs && domNode.attribs.class === 'audio') {
-        return <Button type="audio" name={domNode.attribs.id || ''} />;
+      if (domNode.attribs && domNode.attribs?.id?.startsWith('audio')) {
+        const [type, value, id] = domNode.attribs.id.split('-')
+        return <Button type="audio" id={id} name={value || ''} />;
       }
 
       // if stage direction
       if (domNode.data?.startsWith('[as]')) {
-        const [a, s] = domNode.data.split('[as]')[1].slice(1, -1).split(',');
-        return <div className='dialogue'>{`Act ${a} Scene ${s}`}</div>
+        const pattern = /(\d+),(\d+)/;
+        const match = domNode.data.match(pattern);
+        if (match) {
+          const act = match[1];
+          const scence = match[2];
+          return <div className='dialogue'>{`Act ${act} Scene ${scence}`}</div>
+        }
       }
     },
   })

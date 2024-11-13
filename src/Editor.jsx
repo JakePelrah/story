@@ -19,26 +19,14 @@ export default function Editor({ initialContent, setContent }) {
             resize: false,
             setup: (editor) => {
 
-                // TODO Newline Bug
-                editor.on("keydown", function (e) {
-                    if (e.which == "13" || e.keyCode == "13") {
-                        var selection = editor.selection;
-                        var node = selection.getNode();
-                        if (node.className === 'audio') {
-                            e.preventDefault();
-                            node.remove()
-                            editor.insertContent(`${node.outerHTML}<br>`);
-
-                        }
-                    }
-                });
 
                 // update on format, bold, italics, etc...
                 editor.on('FormatApply', () => setContent(editor.getContent()))
                 editor.on('FormatRemove', () => setContent(editor.getContent()))
 
-                tagCompleter(editor)
+                characterCompleter(editor)
                 audioCompleter(editor)
+                tagCompleter(editor)
 
                 editor.on('change', () => setContent(editor.getContent()))
                 editor.on('input', () => setContent(editor.getContent()))
@@ -57,7 +45,7 @@ export default function Editor({ initialContent, setContent }) {
 function tagCompleter(editor) {
 
     const specialChars = [
-        { text: 'character', value: '[ch]' },
+        { text: 'act & scene', value: '[as]' },
         { text: 'dialogue', value: '[di]' },
         { text: 'stage direction', value: '[sd]' },
     ];
@@ -92,11 +80,70 @@ function tagCompleter(editor) {
 }
 
 
+
+
+function characterCompleter(editor) {
+
+    const specialChars = [
+        { text: 'character', value: 'characterf-Emma', name: 'Emma' },
+        { text: 'character', value: 'characterm-Bob', name: 'Bob' },
+    ];
+
+    const onAction = (autocompleteApi, rng, value, text) => {
+        console.log(autocompleteApi, rng, value, text)
+        editor.selection.setRng(rng);
+        editor.selection.getNode().id = value
+        editor.selection.getNode().innerText = value.split('-')[1]
+        autocompleteApi.hide();
+    };
+
+    const getMatchedChars = (pattern) => {
+        return specialChars.filter((char) => char.text.indexOf(pattern) !== -1);
+    };
+
+    editor.ui.registry.addAutocompleter('storyText', {
+        trigger: '{',
+        minChars: 1,
+        columns: 1,
+        highlightOn: ['char_name'],
+        onAction: onAction,
+        fetch: (pattern) => {
+            return new Promise((resolve) => {
+                const results = getMatchedChars(pattern).map((char) => ({
+                    type: 'cardmenuitem',
+                    value: char.value,
+                    label: char.text,
+                    items: [
+                        {
+                            type: 'cardcontainer',
+                            direction: 'vertical',
+                            items: [
+                                {
+                                    type: 'cardtext',
+                                    text: char.text,
+                                    name: 'char_name',
+                                },
+                                {
+                                    type: 'cardtext',
+                                    text: char.name,
+                                }
+                            ]
+                        }
+                    ],
+
+                }));
+                resolve(results);
+            });
+        }
+    });
+}
+
+
 function audioCompleter(editor) {
 
     const specialChars = [
-        { text: 'Blinding Lights', value: { name: '<div class="audio" id="bl-122.wav">Blinding Light</div>', duration: 300 } },
-        // { text: 'Levitating', value: '*levitating' },
+        { text: 'audio', name: 'Blinding Lights', value: 'audio-Blinding Light-12345' },
+        { text: 'audio', name: 'Levitating', value: 'audiobg-Levitating-23456' },
         // { text: 'God\'s Plan', value: '*godsplan' },
         // { text: 'Bad Guy', value: '*badguy' },
         // { text: 'Thank U, Next', value: '*thankunext' },
@@ -119,7 +166,8 @@ function audioCompleter(editor) {
 
     const onAction = (autocompleteApi, rng, value) => {
         editor.selection.setRng(rng);
-        editor.insertContent(value);
+        editor.selection.getNode().id = value
+        editor.selection.getNode().innerText = value.split('-')[1]
         autocompleteApi.hide();
     };
 
@@ -128,7 +176,7 @@ function audioCompleter(editor) {
     };
 
     editor.ui.registry.addAutocompleter('audioTitle', {
-        trigger: '*au*',
+        trigger: '(',
         minChars: 1,
         columns: 1,
         highlightOn: ['char_name'],
@@ -137,7 +185,7 @@ function audioCompleter(editor) {
             return new Promise((resolve) => {
                 const results = getMatchedChars(pattern).map((char) => ({
                     type: 'cardmenuitem',
-                    value: char.value.name,
+                    value: char.value,
                     label: char.text,
                     items: [
                         {
@@ -147,11 +195,11 @@ function audioCompleter(editor) {
                                 {
                                     type: 'cardtext',
                                     text: char.text,
-                                    name: 'char_name'
+                                    name: 'char_name',
                                 },
                                 {
                                     type: 'cardtext',
-                                    text: char.value.name
+                                    text: char.name,
                                 }
                             ]
                         }
