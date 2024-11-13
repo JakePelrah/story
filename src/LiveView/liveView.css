@@ -47,6 +47,6 @@ p[id^='character']{
     background-color: inherit;
 }
 
-/* p{
+p{
     margin-bottom: 0em !important;
-} */
+}
