@@ -27,23 +27,26 @@
 p[id^='character']{
     font-size: 2em;
     font-weight: bold;
+    background-color: inherit;
 }
 
 .dialogue{
     font-size: 1.25em;
     margin-left: 1em;
+    background-color: inherit;
 }
 
 .sd-dialogue{
     font-style: italic;
     font-size: 1.25em;
-    /* font-family: 'Courier New', Courier, monospace; */
     margin: 0em;
+    background-color: inherit;
 }
 .stage-direction{
     margin-left: 1em;
+    background-color: inherit;
 }
 
-p{
+/* p{
     margin-bottom: 0em !important;
-}
+} */
