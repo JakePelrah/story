@@ -11,6 +11,8 @@
     height: 2.45em;
     background-color: var(--header-color);
     color: #fff;
+    width: 100%;
+    /* position:fixed */
 }
 
 .live-view-html {

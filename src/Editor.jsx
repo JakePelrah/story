@@ -1,8 +1,11 @@
 import { Editor as TMCEEditor } from '@tinymce/tinymce-react';
+import { useEffect } from 'react';
 
-export default function Editor({ initialContent, setContent }) {
+export default function Editor({ initialContent, setContent, setEditorDoc }) {
 
+    useEffect(() => {
 
+    }, [])
 
     return (<TMCEEditor
         apiKey='yzuq4yobe1o1lzlt7l53yjbfls2694t8rh8opst94zzmct98'
@@ -19,6 +22,12 @@ export default function Editor({ initialContent, setContent }) {
             resize: false,
             setup: (editor) => {
 
+                editor.on('ScrollContent', function (e) {
+                    // const scroll = document.getElementById('live-view')
+                    // const editorScroll = editor?.iframeElement?.contentDocument?.documentElement
+                    // setEditorDoc(editorScroll)
+                    // console.log(scroll.scrollTop = editorScroll.scrollTop)
+                });
 
                 // update on format, bold, italics, etc...
                 editor.on('FormatApply', () => setContent(editor.getContent()))

@@ -17,7 +17,43 @@ const initialContent = `<p style="text-align: center;"><span style="font-size: 1
 export default function App() {
   const [content, setContent] = useState(initialContent)
   const [render, setRender] = useState(null)
+  const [editorDoc, setEditorDoc] = useState(null)
 
+  function syncScroll(source, target) {
+    console.log(source.scrollTop, target.scrollTop)
+    target.scrollTop = source.scrollTop
+    // const ratio = source.scrollTop / (source.scrollHeight - source.clientHeight);
+    // target.scrollTop = ratio * (target.scrollHeight - target.clientHeight);
+  }
+
+  useEffect(() => {
+
+    const liveView = document.getElementById('live-view');
+    const editorScroll = editorDoc
+
+
+    if (liveView && editorScroll) {
+
+      // // Add event listeners to both divs
+      liveView.addEventListener('scroll', function () {
+        console.log(editorScroll.scrollTop, liveView.scrollTop)
+        // editorScroll.scrollTop = liveView.scrollTop
+        console.log('live')
+      });
+    }
+
+    // console.log(scroll1, scroll2)
+
+    // Function to sync scroll position
+
+
+
+
+    // console.log(scroll2)
+
+
+
+  }, [editorDoc])
 
   useEffect(() => {
     if (content) {
@@ -25,10 +61,10 @@ export default function App() {
     }
   }, [content])
 
- 
+
   return (<>
     <div id="workspace" className='d-flex'>
-      <Editor initialContent={initialContent} setContent={setContent} />
+      <Editor setEditorDoc={setEditorDoc} initialContent={initialContent} setContent={setContent} />
       <LiveView render={render} />
     </div>
     <Footer />
