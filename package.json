@@ -13,7 +13,10 @@
     "@tinymce/tinymce-react": "^5.1.1",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
     "html-react-parser": "^5.1.18",
+    "nodemon": "^3.1.7",
     "nouislider": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

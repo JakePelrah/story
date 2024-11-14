@@ -13,14 +13,24 @@ export default function Settings() {
     }, [])
 
 
+    function save() {
+        fetch('http://localhost:3000/audioSettings', {
+            method: 'POST',
+            body: JSON.stringify(settingsState),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+    }
+
+
     return (
         <div ref={settingsRef} class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
-
 
             <div class="d-flex justify-content-between offcanvas-body small">
 
                 <div>
-
+                    
                     <h5>{settingsState.id}</h5>
 
                     <div class="form-check">
@@ -81,6 +91,8 @@ export default function Settings() {
 
 
             </div>
+
+            <button onClick={save} >Save</button>
         </div>
     )
 }
