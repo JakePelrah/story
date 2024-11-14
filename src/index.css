@@ -67,3 +67,7 @@ color: white !important;
   --bs-tooltip-bg: purple;
   --bs-tooltip-color: white;
 }
+
+.myeditablediv{
+  background-color: red;
+}

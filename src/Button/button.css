@@ -21,3 +21,8 @@
 .popover-arrow {
     border-color: transparent transparent transparent #000; /* Ensure arrow is visible */
 }
+
+.popover-class{
+    background-color: red !important;
+    color: black !important;
+}

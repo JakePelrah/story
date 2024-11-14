@@ -1,13 +1,10 @@
 import { Editor as TMCEEditor } from '@tinymce/tinymce-react';
-import { useEffect } from 'react';
 
-export default function Editor({ initialContent, setContent, setEditorDoc }) {
+export default function Editor({ initialContent, setContent }) {
 
-    useEffect(() => {
-
-    }, [])
 
     return (<TMCEEditor
+    
         apiKey='yzuq4yobe1o1lzlt7l53yjbfls2694t8rh8opst94zzmct98'
         init={{
             statusbar: false,
@@ -15,19 +12,9 @@ export default function Editor({ initialContent, setContent, setEditorDoc }) {
             font_css: '../node_modules/bootstrap-icons/font/bootstrap-icons.css',
             menubar: 'edit view format custom',
             toolbar: false,
-            plugins: ['advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'],
-
+            plugins:[],
             resize: false,
             setup: (editor) => {
-
-                editor.on('ScrollContent', function (e) {
-                    // const scroll = document.getElementById('live-view')
-                    // const editorScroll = editor?.iframeElement?.contentDocument?.documentElement
-                    // setEditorDoc(editorScroll)
-                    // console.log(scroll.scrollTop = editorScroll.scrollTop)
-                });
 
                 // update on format, bold, italics, etc...
                 editor.on('FormatApply', () => setContent(editor.getContent()))
@@ -57,6 +44,8 @@ function tagCompleter(editor) {
         { text: 'act & scene', value: '[as]' },
         { text: 'dialogue', value: '[di]' },
         { text: 'stage direction', value: '[sd]' },
+        { text: 'dropdown', value: '[dd]' },
+
     ];
 
     const onAction = (autocompleteApi, rng, value) => {
@@ -71,7 +60,7 @@ function tagCompleter(editor) {
 
     editor.ui.registry.addAutocompleter('specialchars', {
         trigger: '[',
-        minChars: 1,
+        minChars: 0,
         columns: 'auto',
         onAction: onAction,
         fetch: (pattern) => {
@@ -96,10 +85,10 @@ function characterCompleter(editor) {
     const specialChars = [
         { text: 'character', value: 'characterf-Emma', name: 'Emma' },
         { text: 'character', value: 'characterm-Bob', name: 'Bob' },
+
     ];
 
     const onAction = (autocompleteApi, rng, value, text) => {
-        console.log(autocompleteApi, rng, value, text)
         editor.selection.setRng(rng);
         editor.selection.getNode().id = value
         editor.selection.getNode().innerText = value.split('-')[1]
@@ -112,7 +101,7 @@ function characterCompleter(editor) {
 
     editor.ui.registry.addAutocompleter('storyText', {
         trigger: '{',
-        minChars: 1,
+        minChars: 0,
         columns: 1,
         highlightOn: ['char_name'],
         onAction: onAction,
@@ -151,8 +140,8 @@ function characterCompleter(editor) {
 function audioCompleter(editor) {
 
     const specialChars = [
-        { text: 'audio', name: 'Blinding Lights', value: 'audio-Blinding Light-12345' },
-        { text: 'audio', name: 'Levitating', value: 'audiobg-Levitating-23456' },
+        { text: 'audio', name: 'Blinding Lights', value: 'audio_Levitating_b166356c-97b3-4f89-b478-6ced3e66bdba.wav' },
+        // { text: 'audio', name: 'Levitating', value: 'audiobg-Levitating-23456' },
         // { text: 'God\'s Plan', value: '*godsplan' },
         // { text: 'Bad Guy', value: '*badguy' },
         // { text: 'Thank U, Next', value: '*thankunext' },
@@ -175,8 +164,10 @@ function audioCompleter(editor) {
 
     const onAction = (autocompleteApi, rng, value) => {
         editor.selection.setRng(rng);
-        editor.selection.getNode().id = value
-        editor.selection.getNode().innerText = value.split('-')[1]
+        // editor.selection.getNode().id = value
+        // editor.selection.getNode().className = 'audio'
+        editor.insertContent(value)
+        // editor.selection.getNode().innerText = value.split('_')[1]
         autocompleteApi.hide();
     };
 
@@ -186,7 +177,7 @@ function audioCompleter(editor) {
 
     editor.ui.registry.addAutocompleter('audioTitle', {
         trigger: '(',
-        minChars: 1,
+        minChars: 0,
         columns: 1,
         highlightOn: ['char_name'],
         onAction: onAction,

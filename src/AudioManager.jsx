@@ -1,61 +1,64 @@
-import { createContext, useContext,  useEffect, useRef } from "react";
+import { createContext, useContext, useEffect, useReducer, useRef, useState } from "react";
+import { settingsReducer, initialSettingsState } from "./Settings/settingsReducer"
 
 const AudioManagerContext = createContext();
 export const useAudioManager = () => useContext(AudioManagerContext)
 
 export default function AudioManager({ children }) {
-    const audioContextRef = useRef(null);
+  const [offcanvas, setOffcanvas] = useState(null)
+  const [settingsState, dispatchSettings] = useReducer(settingsReducer, initialSettingsState)
+  const currentAudioRef = useRef(null)
+  const audioContextRef = useRef(null);
 
-    useEffect(() => {
-        // Initialize Web Audio API
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        
-        // Assign to the ref
-        audioContextRef.current = audioContext;
-    
-    
-        // Cleanup function to close the audio context when the component unmounts
-        return () => {
-          if (audioContextRef.current) {
-            audioContextRef.current.close();
-            console.log("Audio context closed");
-          }
-        };
-      }, []); 
+  useEffect(() => {
+    // Initialize Web Audio API
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+    // Assign to the ref
+    audioContextRef.current = audioContext;
 
 
-      const play = () => {
-        const audioContext = audioContextRef.current;
-    
-        if (!audioContext) return;
-    
-        // Create an oscillator node (for sound generation)
-        const oscillator = audioContext.createOscillator();
-    
-        // Set the oscillator's waveform to a square wave
-        oscillator.type = 'square';
-    
-        // Set the frequency to 30 Hz
-        oscillator.frequency.setValueAtTime(30, audioContext.currentTime);
-    
-        // Connect the oscillator to the destination (speakers)
-        oscillator.connect(audioContext.destination);
-    
-        // Start the oscillator
-        oscillator.start();
-    
-        // Stop the oscillator after 2 seconds (you can adjust this)
-        oscillator.stop(audioContext.currentTime + 2);
-    
-        console.log('Playing 30 Hz square wave');
-      };
+    // Cleanup function to close the audio context when the component unmounts
+    return () => {
+      if (audioContextRef.current) {
+        audioContextRef.current.close();
+        console.log("Audio context closed");
+      }
+    };
+  }, []);
 
 
-    return (
-        <AudioManagerContext.Provider value={{
-            play
-        }}>
-            {children}
-        </AudioManagerContext.Provider>
-    );
+  useEffect(() => {
+    if (currentAudioRef.current) {
+      currentAudioRef.current.loop = settingsState.loop
+      currentAudioRef.current.playbackRate = settingsState.playback_rate
+    }
+  }, [settingsState])
+
+
+  function play(id, name) {
+    if (audioContextRef.current.state === 'suspended') {
+      audioContextRef.current.resume()
+    }
+    const myAudio = document.createElement('audio')
+    myAudio.src = `audio/${name}_${id}`
+    const source = audioContextRef.current.createMediaElementSource(myAudio);
+    source.connect(audioContextRef.current.destination)
+    myAudio.play()
+    currentAudioRef.current = myAudio
+  };
+
+
+  function toggleSettings({ name, type, id }) {
+    dispatchSettings({ type: 'SET_ID', payload: name })
+    offcanvas.toggle()
+  }
+
+  return (
+    <AudioManagerContext.Provider value={{
+      play, setOffcanvas, toggleSettings, dispatchSettings, settingsState
+    }}>
+      {children}
+    </AudioManagerContext.Provider>
+  );
 };

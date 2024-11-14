@@ -3,9 +3,7 @@ import Button from './Button/Button';
 
 export const parserRules = {
 
-
 }
-
 
 export default function parser(content) {
 
@@ -21,6 +19,7 @@ export default function parser(content) {
       if (domNode.data?.startsWith('[di]')) {
         return <div className='dialogue'>{domNode.data.split('[di]')[1]}</div>
       }
+    
       // if stage direction
       if (domNode.data?.startsWith('[sd]')) {
         return <div className='stage-direction'>(<span className='sd-dialogue'>{domNode.data.split('[sd]')[1]}</span>)</div>
@@ -28,8 +27,8 @@ export default function parser(content) {
 
       // if audio
       if (domNode.attribs && domNode.attribs?.id?.startsWith('audio')) {
-        const [type, value, id] = domNode.attribs.id.split('-')
-        return <Button type="audio" id={id} name={value || ''} />;
+        const [_, name, id] = domNode.attribs.id.split('_')
+        return <Button type="audio" id={id} name={name || ''} />;
       }
 
       // if stage direction
